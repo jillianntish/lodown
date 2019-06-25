@@ -2,435 +2,422 @@
 
 // YOU KNOW WHAT TO DO //
 
-/**
+/*******************************************************************************
+ * 
  * each: Designed to loop over a collection, Array or Object, and applies the 
  * action Function to each value in the collection.
  * 
  * @param {Array or Object} collection: The collection over which to iterate.
  * @param {Function} action: The Function to be applied to each value in the 
  * collection
- * 
- * @return 
- */
+ *  
+ *
+ ******************************************************************************/
  
- 
-                function each(collection, action) {
-                    if(Array.isArray(collection)) {
-                        for(var i = 0; i < collection.length; i++) {
-                            action(collection[i], i, collection);
-                        }
-                    } else {
-                        for (var key in collection) {
-                            action(collection[key], key, collection);
-                        }
-                    }
+    function each(collection, action) {   
+        if(Array.isArray(collection)) {
+            for(var i = 0; i < collection.length; i++) {
+                action(collection[i], i, collection);
+                }
+                } else {
+                for (var key in collection) {
+                action(collection[key], key, collection);
+                }
+                }
                 }
                 
-                module.exports.each = each;
-
-
-/*
- * identity: returns value unchanged
+/*******************************************************************************
+ * 
+ * identity: THe identity function returns value unchanged
  * 
  * @param {value} value: any value
- * @param {value} value: return value unchanged
- */
-
-                     function identity(value){
-                         //return value unchanged
-                         return value;
-                     }
-                     
-                     module.exports.identity = identity
-
-/*
-* typeOf : Returns a value as a string
-* 
-* @param {value} value: This function identifies value's data type
+ * @return {value} : a value unchanged
+ *
+ ******************************************************************************/
+    function identity(value){
+        return value;
+            }
+/*******************************************************************************
 *
-*/
-function typeOf(value){
-    if (Array.isArray(value)){
-        return 'array';
-    } if (value === null){
-        return 'null';
-    }
-    return typeof identity(value);
-};
-                                                
-                    // _.typeOf = function(value){
-                    //     //takes a single value, currently we dont know what kind
-                    //         if(Array.isArray(value)){
-                    //             //check to see if value is an array, if so:
-                    //         return 'array';
-                    //         //return 'array' as a string
-                    //         } else if (value === null){
-                    //             // checks if value is absent of any value
-                    //             return 'null';
-                    //                 //return null 
-                    //         } return typeof value;
-                    //                 // returns value's data type
-                    //                     };
-                    
-                            module.exports.typeOf = typeOf;
-
-/*
-* first : Designed to check an array's type and return an array with new values
+* typeOf : The typeOf function returns a value as a string
 * 
-* @param {array} array: Checks if the array is an array, returns a new array
-* @param {number} number: Checks if number is not given or not a number
+* @param {value} value: A Data type to be checked and returned
+*
+* @return {String} value : The value is returned as a String
+*******************************************************************************/
+    
+    function typeOf(value){
+        if (Array.isArray(value)){
+            return 'Array';
+        } if (value === null){
+            return 'Null';
+        }
+        return typeof identity(value);
+        }
+                   
 
- */
+/*******************************************************************************
+* 
+* first : Designed to check a data type and return an array with new values
+* 
+* @param {Array} array: Checks if the value is NOT an array and returns a new array
+*                       if it is true that it is NOT an array.
+* 
+* @param {number} number: Checks if number is less than zero or if the given number
+*                       is not a Number. If it is not a number, return the given 
+*                       array at the zero-index position. If the number IS a number
+*                       return a new array with the first instance of a number.
+*
+* @return {Array} array: Returns a new array with some of the values from the
+*                       old array from the beginning to the first instance of a
+*                       number
+*******************************************************************************/
 
-             function first(array, number){
-                 //declare a function that takes an array and a number
-                if(!Array.isArray(array) || number < 0){
-                    //if the array is not an array or if the number is less than zero
-                    return []; 
-                        //return a a new array
-                } else if (typeof number !== 'number') {
-                        // if the data type of number is not strictly equal to a number
-                    return array[0];
-                        //return the original array at it's index position
-                    }
-                    return array.slice(0, number);
-                }; //return the original array from the index to the given number
-             
-              module.exports.first = first;
-
+    function first(array, number){
+        if(!Array.isArray(array) || number < 0){
+            return []; 
+                } else if (number !== 'Number') {
+                return array[0];
+                }
+                return array.slice(0, number);
+                }
+                    
  
- /*
- * last : takes an array and returns an empty array, elements of an array, or
- * an array with new values
+/*******************************************************************************
+* last : takes an array and returns an empty array, elements of an array, or
+* an array with new values
 * 
 * @param {array} array : checks for an array, returns an empty array if not
 * @param {number}  number : a number to be checked
- */
+* 
+* @return {array} array : returns a new array with values from the old array 
+*                       starting from the END of the array to the first instance
+*                       of a number
+***************************************************************************** */
 
 
-function last(array, number){
-    //declare a function that takes an array and a number as a parameter
-    if(!Array.isArray(array) || number < 0){
-    //Checks if 'array' is NOT an array, or if number is less than zero 
-        return []; 
-        //return an empty array
-            } else if (typeof number !== 'number') {
-            //if the data type of number is not strictly equal to a number
-                return array[array.length - 1];
-                //return the value at the at the array's final position
-                   }
-                return array.slice(-number);
-                //return the array with 
-    };          
-    
-     module.exports.last = last;
-/*
- * indexOf : Takes an array and returns the first occurence of a specific value
+    function last(array, number){
+        if(!Array.isArray(array) || number < 0){
+            return []; 
+                } else if (number !== 'Number') {
+                    return array[array.length - 1];
+                       }
+                    return array.slice(-number);
+                       }          
+        
+/*******************************************************************************
+* 
+* indexOf : Takes an array and returns the first occurence of a specific value
 *  in the array. 
 * 
 * @param {array} : an array to be iterated over
 * @param {value} : a value te be compared to during the iteration
- */
+* 
+* @return {value} : Returns the index of a value an array or -1 if it is not in the
+*                   array
+*   
+*******************************************************************************/
 
+    function indexOf(array, value) {
+         for(var i = 0; i < array.length; i++){
+            if(array[i] === value){
+                return i; 
+                }
+                }
+                return -1; 
+                }
 
- function indexOf(array, value) {
-    //Declared a function that takes an array and a value,
-    for(var i = 0; i < array.length; i++){
-        //during the iteration of this loop, 
-        if(array[i] === value){
-            //if the iteration index value is the same as value
-            return i; 
-            //return the iteration index position
-        }
-    }
-    return -1; 
-};//if not, return negativate 1
-
- module.exports.indexOf = indexOf;
-
-
-/*
- * contains : Designed to iterate over an array and return a boolean value based
- *          on the comparison of an iteration index value and a given value
+/*******************************************************************************
+* 
+* contains :  Designed to check if an element is present in an array and returns 
+* true if it exists, or false otherwise. 
 * 
 * @param {array} : an array to be checked if it contains a specific value
 * @param {value} : a value to be checked during the iteration
- */
-
-
-function contains(array, value){
-    let result = false;
-    //declare a variable with a boolean value
-    for( var i = 0; i < array.length; i++){
-     // the iteration over the array
-            result = value === array[i] ? true : result;
-            //while iterating, check if result(which is false) is the same as the iteration's current index position
-            // if they are the same, return true, if it is the opposite, return result(false)
-        }
-        return result;
-}       //return the result outside of the iteration
-
- module.exports.contains = contains;
-
-
-/*
- * each : This function takes an array object, and runs a function on the iteration
-         index value, the array's index, and the array object itself
 * 
-* @param {collection} collection : An array object to be iterated over with a Loop
-*       based on it's type (A For or a For In Loop)
-* @param {function} action: A function to run on multiple elements and properties
- */
+* @return {boolean} result : A boolean value that is returned based on conditions
+*                           in the array.
+*
+*******************************************************************************/
 
-function each(collection, action){
-    if (Array.isArray(collection)){
-         //if collection is an array, 
-        for (let i = 0; i < collection.length; i++){
-        action(collection[i], i, collection);
-    } //iterate through the array and call the action function once on the specified values 
-    } else {
-        for (var key in collection){
-            //if collection is an object, 
-            action(collection[key], key, collection);
-        } /*iterate through the object then, call the function for the iteration index position, 
-         the keys in the object, and the object itself */
-    }
-    
-};
-
- module.exports.each = each;
+    function contains(array, value){
+        let result = false;
+        for( var i = 0; i < array.length; i++){
+                result = value === array[i] ? true : result;
+            }
+            return result;
+            }
 
 
-/*
+/*******************************************************************************
  * unique : Takes an array, looks through it to find duplicates, 
  *          and returns a new array with the duplicates removed
  * 
- * @param {array} array : An array full of elements, the duplicates of which will be removed
- */
+ * @param {array} array : An array full of elements, the duplicates of which 
+ *                       will be removed
+ * 
+ * @return {array} array : Returns a new array of the old array in which all 
+ *                          elements from have been duplicates removed
+ * 
+ ******************************************************************************/
 
-function unique(array) {
-    //declared a function that takes an array as the parameter
-    var newArr = [];
-    //declared a new array literal in which to copy into with duplicate values removed
-    for (var i = 0; i < array.length; i++){
-        //iterating through the array to check elements
-         if(newArr.includes(array[i])){
-             /*conditional statement : if the new array already includes the 
-             element at the current iteration index position, continue in the iteration*/
-            } else {
-                newArr.push(array[i]);
-            } /* if the new array does NOT include an element that is the same as the iteration
-            index position, push the element at the index position into the new array*/
-    } return newArr;
-}; //Finally, return the new array with no duplicate elements
-
- module.exports.unique = unique;
+    function unique(array) {
+        var newArr = [];
+            for (var i = 0; i < array.length; i++){
+                if(newArr.includes(array[i])){
+                     } else {
+                    newArr.push(array[i]);
+             } return newArr;
+             }
+             }
 
 
-/*
- * filter : Calls a function for each element in array and returns a new array based
- *          on a boolean value
+/*******************************************************************************
+* filter : Calls a function for each element in array and returns a new array 
+*          based on a boolean value
 * 
-* @param {array} array : an array to be iterated over while calling a function on itself and it's elements
+* @param {array} array : an array to be iterated over while calling a function 
+*                        on itself and it's elements
+* 
 * @param {function} action : a function to be called on an array and it's elements
- */
-
-
-function filter(array,action){
-    let newArr = [];
-    //Declare a new array in which to print the values from the function call on the array
-    if (Array.isArray(array)){
-        //Tests in the array is an array, if so:
-        for (let i = 0; i < array.length; i++){
-        // during the iteration of the array:
-        if (action(array[i], i, array) === true){ 
-            //test the function on the array in the specified elements, if the return value is a truthy
-        newArr.push(array[i]);
-        }// push the iteration index postion into the new array
-        }
-        return newArr;
-    }// return the new array outside of the iteration
-
-}
-
- module.exports.filter = filter;
-
-/*
-* reject : Calls a function for each element in an array and returns a new array of the
-*        false values in the array
 * 
-* @param {array} array : an array to be iterated through with a function call on specified
-*               elemenets in the array
-* @param {function} function : a function to be called on elements during the iteration,
-                             used to return falsey values
-*/
-function reject(array,action){
-  return  filter(array, function(element, index, array){
-                // return elements that fail action
+* @return {array} newArr: Filters through a collection, and returns a new array,
+*                       based on truthy values in the collection
+* 
+*******************************************************************************/
+
+
+    function filter(array,action){
+        let newArr = [];
+        if (Array.isArray(array)){
+            for (let i = 0; i < array.length; i++){
+            if (action(array[i], i, array) === true){ 
+            newArr.push(array[i]);
+            }
+            }
+            return newArr;
+            }
+            }
+
+
+/*******************************************************************************
+* 
+* reject : Calls a function for each element in an array and returns a new array 
+*       of the false values in the array
+* 
+* @param {array} array : an array to be iterated through with a function call on
+* specified elements in the array
+* 
+* @param {function} action : a function to be called on elements during the
+* iteration, used to return falsey values
+* 
+* @return {array} array : Returns a new array of values that return falsey values 
+* after having a mutation performed on them
+*                             
+*******************************************************************************/
+    function reject(array,action){
+        return  filter(array, function(element, index, array){
             return !action(element, index, array);
-  });
-  }
+                });
+                }
 
- module.exports.reject = reject;
-
-/*
- * parition : Loops through an array and calls a function for spec. elements, returns
- *          a new array of 2 subarrays
+/*******************************************************************************
 * 
-* @param {array} : an array to be tested and split into two sub arrays
-* @param {function} : a function to be called on specified elements in an array
- */
-
-function partition(array, func){
-    let myArr = [[], []];
-     
-     each(array, function(element, index, array){
-        if (func(element, index, array)){
-                myArr[0].push(element);
-        } else {        
-            myArr[1].push(element);
+* partition : Loops through an array and calls a function for spec. elements, 
+*            returns a new array of 2 subarrays
+* 
+* @param {array} array : an array to be tested and split into two sub arrays
+* @param {function} action : a function to be called on specified elements in an
+*                           array
+* 
+* @return {two arrays} : Returns two arrays, one based on truthy values and one 
+*                       based on falsey values
+*
+*******************************************************************************/
+ 
+ 
+    function partition (array, action){
+        let myArr = [[], []];
+         each(array, function(element, key, array){
+            if (action(element, key, array)){
+                    myArr[0].push(element);
+            } else {        
+                myArr[1].push(element);
+            }
+         });
+         return myArr;
         }
-     });
-     return myArr;
-};
 
 
- module.exports.partition = partition;
-
-/*
-* map : Designed to iterate over a an array object, call a function for each iteration index postion, 
-*       and returns a new array
+/*******************************************************************************
 * 
-* @param {collection} : Collection to be iterated over which calls a function and returns the value
-*                        in a new array
-* @param {function} : a function to be called on the specified elements of an array object
-*/
+* map : Designed to iterate over a an array object, call a function for each 
+*       iteration index postion, and return a new array
+* 
+* @param {collection} collection : Collection to be iterated over which calls a 
+* function and returns the value in a new array
+* @param {function} action : a function to be called on the specified elements of an
+*                       array object
+* 
+* @return {array} : Filters through an array or an object and returns mutated values
+*                   in a new element
+*
+*******************************************************************************/
 
-function map(collection, action){
+   function map(collection, action){
     let myArr = [];
-     if (Array.isArray(collection)){
-     for (let i = 0; i < collection.length; i++){
-        myArr.push(action(collection[i], i, collection));
-     }
-        } else {
-        for (var key in collection){
-            myArr.push(action(collection[key], key, collection));
-        }
-     }
-      return myArr;
-};
+    each(collection, function(element, index, collection){
+       myArr.push(action(element, index, collection))
+    });
+return myArr;
+}
+                   
 
- module.exports.map = map;
-
-/*
+/*******************************************************************************
+ *
+ *
  * pluck: Designed to iterate through a collection and return an array containing 
-         the value
+ *        the value
  * 
  * @param {collection} collection: An array object to be iterated over
- * @param {property} value: The property to be printed to the new array
- */
+ * @param {property} prop : The property to be printed to the new array
+ *
+ *@return {value} prop : 'Plucks' a mutated value from an array or object and 
+ *                       returns it
+ *
+ ******************************************************************************/
 
-/** _.pluck
-* Arguments:
-*   1) An array of objects //collection
-*   2) A property
-* Objectives:
-*   1) Return an array containing the value
-*  of <property> for every element in <array>
-*   2) You must use _.map() in your implementation.
-* Examples:
-*   _.pluck([{a: "one"}, {a: "two"}], "a") -> ["one", "two"]
-*/
- 
-function pluck(){}
+    function pluck(collection, prop){
+        return map(collection, function(element, index, collection){
+            return element[prop];
+                });
+                }
+                
+                
+/*******************************************************************************
+ *
+ *
+ * every: Designed to iterate through a collection and return a truthy value based
+ *      on values that have passed a certain test
+ * 
+ * @param {collection} collection: An array object to be iterated over
+ * @param {function} action: 
+ *
+ * @return {boolean} bool : Returns a boolean value based on whether or a not a 
+ * function has been defined and if the mutations on the elements and the collection
+ *  return a truthy value
+ * 
+ *
+ ******************************************************************************/
+             
+function every(collection, action){
+       let bool = true;
+        each(collection, function(element, index, collection) {
+        if (typeof action === 'function' && !action(element, index, collection)){
+            bool = false;
+            }
+            else if (typeof action !== 'function' && !element) {
+            bool = false;
+            }
+            });
+            return bool;
+    }
 
-//takes an array and a prop
-//create result array
-//loop over array
-//return result
-// _.pluck = function(array, prop){
-//     let myArr = [];
-//      for (let i = 0; i < array.length; i++){
-//          array.push(array[i][prop]);
-//              }
-//          return myArr;
-// };
-
-
-function pluck(array, prop){
-return map(array, function(element, index, collection){
-    return element[prop];
-});
-}
-
- module.exports.pluck = pluck;
-
-
-/*
- * some : Calls a function on the elements of a collection and returns a boolean value
+/*******************************************************************************
+* 
+* some : Calls a function on the elements of a collection and returns a falsey
+*       value based on values that have failed a certain test
 * 
 * @param {collection} collection : The collection to be iterated over 
-* @param {function} function: The function to be called on elements in the collection 
-*                           and returns a boolean based on the results
- */
+* @param {function} action: The function to be called on elements in the 
+* collection and returns a boolean based on the results
+* 
+* @return {boolean} bool : Returns a boolean value based on whether or a not a 
+ * function has been defined and if the mutations on the elements and the collection
+ * return a falsey value
+*******************************************************************************/
+
+    function some(collection, action){
+       let bool = false;
+        each(collection, function(element, index, collection) {
+        if (typeof action === 'function' && action(element, index, collection)){
+            bool = true;
+            }
+            else if (typeof action !== 'function' && element) {
+            bool = true;
+            }
+            });
+            return bool;
+             }
 
 
- module.exports.some = some;
-
-
-/*
- * reduce: 
+/*******************************************************************************
+ * reduce: Designed to reduce an array of values into a single value.
+ *
  * 
- * @param {array} value:
- * @param {function} value: 
- * @param {a seed}
+ * @param {array} array: an array to be iterated through
+ * 
+ * @param {function} action: a function to be called on spec. values using the
+ * arguments to represent the previous result(seed), current result (element),
+ * index, and the array or object itself
+ * 
+ * @param {accumulator} seed : An accumulator that collects the values being 
+ *                          iterated through
+ * 
+ * @return {accumulator} seed : If seed is not defin
+ * 
+ *
+ ******************************************************************************/
+ 
+
+function reduce(array, action, seed) {
+    if (seed === undefined) {
+        seed = array[0];
+        for (let i = 1; i < array.length; i++) {
+            seed = action(seed, array[i], i);
+        }
+    }
+    else {
+        for (let i = 0; i < array.length; i++) {
+            seed = action(seed, array[i], i);
+        }
+    }
+    return seed;
+}
+
+/*******************************************************************************
+ * extend: a function that copies one object into another plus whatever new objects
+ *         that may come after it
+ * 
+ * @param {object} object1: A target object for object2 and it's future arguments 
+ *                          to copied INTO.
+ * @param {object} object2: The source object which properties and future arguments
+ *                          will be copied FROM
+ * 
+ * @return {object} object1 : Returns the target object with values from the source
+ *                          object copied into it.
  */
  
- /*
-* Objectives:
-*   1) Call <function> for every element in <collection> passing the arguments:
-*         previous result, element, index
+ 
+    function extend(object1, object2) {
+        return Object.assign(object1, ...arguments);
+            }
 
-*   2) Use the return value of <function> as the "previous result"
-*      for the next iteration
 
-*   3) On the very first iteration, use <seed> as the "previous result"
-
-*   4) If no <seed> was given, use the first element/value of <collection> as <seed> 
-*   and continue to the next element
-
-*   5) After the last iteration, return the return value of the final <function> call
-* Edge Cases:
-
-*   1) What if <seed> is not given?
-* Examples:
-*   _.reduce([1,2,3], function(previousSum, currentValue, currentIndex){ return previousSum + currentValue }, 0) -> 6
-*/
-
-/*
- * extend: 
- * 
- * @param {object} value: 
- * @param {object} value: 
- */
-  function extend(){
-      
-  }
-  
-/** _.extend
-* Arguments:
-*   1) An Object
-*   2) An Object
-*   ...Possibly more objects
-* Objectives:
-*   1) Copy properties from <object 2> to <object 1>
-*   2) If more objects are passed in, copy their properties to <object 1> as well, in the order they are passed in.
-*   3) Return the update <object 1>
-* Examples:
-*   var data = {a:"one"};
-*   _.extend(data, {b:"two"}); -> data now equals {a:"one",b:"two"}
-*   _.extend(data, {a:"two"}); -> data now equals {a:"two"}
-*/
-
+////////////////////////////////////////////////////////////////////////////////
+module.exports.each = each;
+module.exports.identity = identity;
+module.exports.typeOf = typeOf;
+module.exports.first = first;
+module.exports.last = last;
+module.exports.indexOf = indexOf;
+module.exports.contains = contains;
+module.exports.unique = unique;
+module.exports.filter = filter;
+module.exports.reject = reject;
+module.exports.partition = partition;
+module.exports.map = map;
+module.exports.pluck = pluck;
+module.exports.some = some;
+module.exports.reduce = reduce;
 module.exports.extend = extend;
-
